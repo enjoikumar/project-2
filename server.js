@@ -8,6 +8,10 @@ var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var mongoose = require('mongoose');
 var flickrapi = require('flickrapi');
+var flickrOptions = {
+  api_key: process.env.FLICKR_KEY,
+  secret: process.env.FLICKR_SECRET_key
+};
 
 //middleware
 app.use(morgan('dev'));
@@ -26,6 +30,9 @@ app.use(methodOverride(function(req, res){
 mongoose.connect(db);
 
 //controller
+var memescontroller = require('./controllers/memes.js');
+app.use('/memes', memescontroller);
+
 
 //listener
 app.listen(port);
