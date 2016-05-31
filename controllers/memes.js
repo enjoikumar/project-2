@@ -4,8 +4,8 @@ var router = express.Router();
 // var Test = require('../models/test.js');
 var request = require('request');
 var Memes = require('../models/memeschema.js');
-var flickr = require("flickrapi");
-var flickrapi = require('flickrapi');
+var Flickr = require("flickrapi");
+// var flickrapi = require('flickrapi');
 var flickrOptions = {
   api_key: process.env.FLICKR_KEY,
   secret: process.env.FLICKR_SECRET_key
@@ -18,10 +18,84 @@ router.get('/', function(req, res){
 	});
 });
 
+
+
+
+//DUMMY
+router.get('/dummy', function(req, res){
+  Flickr.tokenOnly(flickrOptions, function(error, flickr) {
+    // we can now use "flickr" as our API object
+    flickr.photos.search({
+      tags: "meme",
+      page: 1,
+      per_page: 1
+    }, function(err, result) {
+      console.log(typeof result)
+      console.log(result.photos.photo);
+      var image = "https://farm" + result.photos.photo[0].farm + ".staticflickr.com/" + result.photos.photo[0].server + "/" + result.photos.photo[0].id + "_" + result.photos.photo[0].secret + ".jpg"
+      // result is Flickr's response
+    });
+  });
+
+
+  // console.log('--------------------');
+  // console.log(flickr);
+  // console.log('--------------------');
+  // flickr.photos.search({
+  //   user_id: flickr.options.user_id,
+  //   page: 1,
+  //   per_page: 1
+  // }, function(err, result) {
+  //   console.log(result);
+  //   // result is Flickr's response
+  // });
+})
+
 //NEW
 router.get('/new', function(req, res){
   res.render('new.ejs');
 });
+
+// var flickrImage = [];
+//CREATE
+router.post('/', function(req,res){
+  var brandnewmeme = new Memes(req.body);
+  var name = req.body.name
+  var img = req.body.imgURL;
+  var about = req.body.about;
+  console.log(req.body.imgURL);
+  brandnewmeme.save(function(err){
+    if (err){
+      console.log(err);
+    }else{
+      console.log('new meme');
+       Flickr.tokenOnly(flickrOptions, function(error, flickr) {
+    // we can now use "flickr" as our API object
+    flickr.photos.search({
+      tags: img,
+      page: 1,
+      per_page: 1
+    }, function(err, result) {
+      console.log(result)
+      // console.log(typeof result)
+      console.log(result.photos);
+      var image = "https://farm" + result.photos.photo[0].farm + ".staticflickr.com/" + result.photos.photo[0].server + "/" + result.photos.photo[0].id + "_" + result.photos.photo[0].secret + ".jpg"
+      // result is Flickr's response
+      newMemes.push({name: name, img: image, about: about})
+      console.log(newMemes);
+      // flickrImage.push(image);
+      // console.log(flickrImage);
+    });
+  });
+    }
+  })
+  // res.redirect('/memes');
+  // res.render('index.ejs', {flickrImage}, {newmeme});
+  res.redirect('/memes')
+});
+
+//format for displaying image
+// var img1 = "https://farm" + firstResult.farm + ".staticflickr.com/" + firstResult.server + "/" + firstResult.id + "_" + firstResult.secret + ".jpg"
 
 //SHOW
 router.get('/:id', function(req, res){
@@ -50,28 +124,33 @@ router.put('/:id', function(req, res){
   });
 })
 
-//CREATE
-router.post('/', function(req,res){
-  var newmeme = new Meme(req.body);
-  Meme.save(function(err){
-    if (err){
-      console.log(err);
-    }else{
-      console.log('new meme')
-    }
-  })
-  res.redirect('/memes');
-});
 
 
 //DELETE
 router.delete('/:id', function(req, res){
-  Memes.findByIdAndRemove(req.params.id, function(){
-      res.redirect('/memes');
-  });
-})
+  Memes.findByIdAndRemove({'_id' : req.params.id, function(){
+    res.redirect('/memes');
+  }})
+});
 
-
+var flickrFunction =function(){
+  Flickr.tokenOnly(flickrOptions, function(error, flickr) {
+    // we can now use "flickr" as our API object
+    flickr.photos.search({
+      tags: img,
+      page: 1,
+      per_page: 1
+    }, function(err, result) {
+      console.log(result)
+      // console.log(typeof result)
+      console.log(result.photos);
+      var image = "https://farm" + result.photos.photo[0].farm + ".staticflickr.com/" + result.photos.photo[0].server + "/" + result.photos.photo[0].id + "_" + result.photos.photo[0].secret + ".jpg"
+      // result is Flickr's response
+      flickrImage.push(image);
+      console.log(flickrImage);
+    });
+  })
+} 
 
 // // Index
 // router.get('/', function(req,res){
@@ -210,7 +289,7 @@ router.delete('/:id', function(req, res){
 
 
 
-
+// newform. 
 
 
 

@@ -9,8 +9,10 @@ router.get('/', function(req,res){
     });
 });
 
+var newMemes = [];
+
 router.get('/newmemes', function(req,res){
-  var newMemes = [
+  newMemes.push(
     { 
       name: "Doge",
       img: "https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg",
@@ -53,7 +55,7 @@ router.get('/newmemes', function(req,res){
       img:"https://cdn.meme.am/instances/500x/68594086.jpg",
       about: "Basically, bad luck. Where nothing goes right."
     }
-  ];
+  );
   console.log(newMemes);
   Memes.create(newMemes, function(err) {
       res.redirect('/seed');
