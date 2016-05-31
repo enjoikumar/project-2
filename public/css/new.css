@@ -12,3 +12,8 @@ body{
     background-size:     cover;
 }
 */
+@media (min-width: 400px;){
+	body{
+		display: inline-block;
+	}
+}

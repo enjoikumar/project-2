@@ -1,10 +1,16 @@
 var express = require('express');
 var router = express.Router();
-var Room = require('../models/memeschema.js');
+var Memes = require('../models/memeschema.js');
 
-router.get('/newmemes', function(req, res) {
+router.get('/', function(req,res){
+  console.log('seed runs')
+    Memes.find({}, function(err, fruits){
+      res.send(memes);
+    });
+});
 
-    var newmemes = [
+router.get('/newmemes', function(req,res){
+  var newMemes = [
     { 
       name: "Doge",
       img: "https://upload.wikimedia.org/wikipedia/en/5/5f/Original_Doge_meme.jpg",
@@ -48,12 +54,10 @@ router.get('/newmemes', function(req, res) {
       about: "Basically, bad luck. Where nothing goes right."
     }
   ];
-
-Meme.create(newMemes, function(err) {
-  console.log("SEED: NEW MEMES CREATED!");
-  res.redirect('/seed');
-});
-
+  console.log(newMemes);
+  Memes.create(newMemes, function(err) {
+      res.redirect('/seed');
+  });
 });
 
 module.exports = router;

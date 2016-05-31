@@ -3,13 +3,39 @@ var express = require('express');
 var router = express.Router();
 // var Test = require('../models/test.js');
 var request = require('request');
-var memes = require('../models/mememodels.js');
+var memes = require('../models/memeschema.js');
 var flickr = require("flickrapi");
 var flickrapi = require('flickrapi');
 var flickrOptions = {
   api_key: process.env.FLICKR_KEY,
   secret: process.env.FLICKR_SECRET_key
 };
+
+//INDEX
+router.get('/', function(req, res){
+	memes.find({}, function(err, memes){
+		res.render('index.ejs', {memes: memes});
+	});
+});
+
+//SHOW
+router.get('/:id', function(req, res){
+    // fruits.find({}, function(err, fruits){
+      memes.findById(req.params.id, function(err, memes){
+        res.render('show.ejs', {memes: memes});
+      });
+    // })
+  });
+
+
+//Edit
+router.get('/:id/edit', function(req, res) {
+	memes.findById(req.params.id,function(err, memes){
+		res.render('edit.ejs', {memes:memes});
+	})
+});
+
+
 
 // // Index
 // router.get('/', function(req,res){
@@ -271,4 +297,4 @@ var flickrOptions = {
 
 
 
-// module.exports = router;
+module.exports = router;

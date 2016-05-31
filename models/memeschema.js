@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 // SCHEMAS
 var memeSchema = new mongoose.Schema({
 	memeName: String,
-	image: String,
+	img: String,
 	about: String
 });
 

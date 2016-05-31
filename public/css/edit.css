@@ -2,7 +2,7 @@ body{
 	background-color: #EDE7F6;
 	font-family: 'Slackey', cursive;
 }
-.img {
+/*.img {
     position: relative;
     float: left;
     width:  100px;
@@ -10,4 +10,9 @@ body{
     background-position: 50% 50%;
     background-repeat:   no-repeat;
     background-size:     cover;
+}*/
+@media (min-width: 400px;){
+	body{
+		display: inline-block;
+	}
 }

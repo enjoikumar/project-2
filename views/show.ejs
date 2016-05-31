@@ -10,11 +10,11 @@
 	<div id="show">
 		<div>
 			<h3>Memes</h3>
-			<h5>Name: <%= name %></h5>
-			<img src=<%= img %>>
-			<h5>About: <%= about %></h5>
-			<a href="/memes/<%= id %>/edit">Edit Meme</a>
+			<h5 id="name">Name: <%= memes.name %></h5>
+			<img src=<%= memes.img %>>
+			<h5 id="description"><%= memes.about %></h5>
 		</div>
 	</div>
+	<a href="/memes <%= memes.id %>/edit">Edit meme</a>
 </body>
 </html>

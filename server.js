@@ -34,6 +34,11 @@ var memescontroller = require('./controllers/memes.js');
 app.use('/memes', memescontroller);
 
 
+var seedcontroller = require('./controllers/seed.js');
+app.use('/seed', seedcontroller);
+
+
+
 //listener
 app.listen(port);
 console.log('=============================');
