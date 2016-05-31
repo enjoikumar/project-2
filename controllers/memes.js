@@ -3,7 +3,7 @@ var express = require('express');
 var router = express.Router();
 // var Test = require('../models/test.js');
 var request = require('request');
-var memes = require('../models/memeschema.js');
+var Memes = require('../models/memeschema.js');
 var flickr = require("flickrapi");
 var flickrapi = require('flickrapi');
 var flickrOptions = {
@@ -13,27 +13,63 @@ var flickrOptions = {
 
 //INDEX
 router.get('/', function(req, res){
-	memes.find({}, function(err, memes){
-		res.render('index.ejs', {memes: memes});
+	Memes.find({}, function(err, memes){
+		res.render('index.ejs', {memes});
 	});
+});
+
+//NEW
+router.get('/new', function(req, res){
+  res.render('new.ejs');
 });
 
 //SHOW
 router.get('/:id', function(req, res){
-    // fruits.find({}, function(err, fruits){
-      memes.findById(req.params.id, function(err, memes){
-        res.render('show.ejs', {memes: memes});
-      });
-    // })
-  });
-
-
-//Edit
-router.get('/:id/edit', function(req, res) {
-	memes.findById(req.params.id,function(err, memes){
-		res.render('edit.ejs', {memes:memes});
-	})
+  Memes.findById(req.params.id, function(err, memes){
+    // console.log(memes.id);
+    res.render('show.ejs', {memes});
+  })
 });
+
+//EDIT
+router.get('/:id/edit', function(req, res) {
+  console.log(req.params.id);
+  Memes.findById(req.params.id, function(err, memes){
+    console.log("this is the meme " + memes);
+    res.render('edit.ejs', {memes});
+  })
+});
+
+
+
+
+// UPDATE
+router.put('/:id', function(req, res){
+  Memes.findById(req.params.id, function(err,memes){
+    res.redirect('./memes')
+  });
+})
+
+//CREATE
+router.post('/', function(req,res){
+  var newmeme = new Meme(req.body);
+  Meme.save(function(err){
+    if (err){
+      console.log(err);
+    }else{
+      console.log('new meme')
+    }
+  })
+  res.redirect('/memes');
+});
+
+
+//DELETE
+router.delete('/:id', function(req, res){
+  Memes.findByIdAndRemove(req.params.id, function(){
+      res.redirect('/memes');
+  });
+})
 
 
 

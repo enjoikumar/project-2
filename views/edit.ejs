@@ -10,12 +10,12 @@
 <div id="changes">
 	<h3 id="edit">Edit</h3>
 
-	<form action="/memes/<%= id %>" method="POST" id="editformid">
-		<input type="text" name="name" value="<%= name %>"/>
+	<form action="/memes/<%=memes.id%>" method="POST" edit="editformid">
+		<input type="text" name="name" value="<%= memes.name %>"/>
 		<br>
-		<input type="URL" name="image" value="<%= img %>"/>
+		<input type="URL" name="image" value="<%= memes.img %>"/>
 		<br>
-		<input type="text" name="about" value="<%= about %>"/>
+		<input type="text" name="about" value="<%= memes.about %>"/>
 		<br>
 		</textarea>
 		<input type="hidden" name="_method" value="PUT"/>
