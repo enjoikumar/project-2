@@ -17,7 +17,8 @@ module.exports = [
 		}, {
 			id: 4,
 			name: "Drake",
-			img: "https://s3.amazonaws.com/hiphopdx-production/2015/12/Drake-Stormtrooper.jpg",
+			// img: "https://s3.amazonaws.com/hiphopdx-production/2015/12/Drake-Stormtrooper.jpg",
+			img: "http://67.media.tumblr.com/963bbd940f51a3f87c5530dcece397a5/tumblr_o7jiyttomQ1sxck1io1_500.jpg",
 			about: "The Toronto will always be the butt of the joke. His memes often refer to his soft side",
 		}, {
 			id: 5,
@@ -32,7 +33,7 @@ module.exports = [
 		}, {
 			id: 7,
 			name: "Brace Yourself",
-			img: "https://cdn.meme.am/instances/500x/68593769.jpg",
+			img: "https://cdn.meme.am/instances/500x/68593809.jpg",
 			about: "A reference to Game of Thrones, this meme has been widely used to illustrate fear and awkwardness."
 		}, {
 			id: 8,
