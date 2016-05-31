@@ -4,7 +4,19 @@
 	<title></title>
 </head>
 <body>
-
-
+<div id="flickr memes">
+	<% for(var i=0; i < flickrImage.length; i++){ %>
+		<div>
+		<% flickrImage[i].name %>
+		</div>
+		<a href="/memes/<%= flickrImage[i].id %>" >
+			<img src=<%= flickrImage[i].img %> />
+		</a>
+		</br>
+		<div>
+		 <%= flickrImage[i].about %>
+		</div>
+	}
+</div>
 </body>
 </html>
