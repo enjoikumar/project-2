@@ -3,7 +3,7 @@ var express = require('express');
 var app = express();
 var morgan = require('morgan');
 var port = process.env.PORT || 3000;
-var db = process.env.MONGODB_URI || "mongodb://localhost/memes_dev";
+var mongoUri = process.env.MONGODB_URI || "mongodb://localhost/memes_dev";
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var mongoose = require('mongoose');
@@ -27,7 +27,7 @@ app.use(methodOverride(function(req, res){
 }));
 
 //Database
-mongoose.connect(db);
+mongoose.connect(mongoUri);
 
 //controller
 var memescontroller = require('./controllers/memes.js');

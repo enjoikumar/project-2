@@ -1,6 +1,10 @@
 body{
 	background-color: #EDE7F6;
 	font-family: 'Slackey', cursive;
+    padding-left: 30%;
+}
+h3{
+    font-size: 30px;
 }
 /*.img {
     position: relative;

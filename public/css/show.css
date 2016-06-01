@@ -1,6 +1,7 @@
 body{
 	background-color: #EDE7F6;
 	font-family: 'Slackey', cursive;
+  padding-left: 30%;
 }
 /*.img {
     position: relative;
@@ -16,6 +17,12 @@ body{
 	body{
 		display: inline-block;
 	}
+}
+a{
+  font-size: 30px;
+}
+h5:hover{
+  color:orange;
 }
 a {
 text-decoration: none:

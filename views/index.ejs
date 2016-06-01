@@ -12,9 +12,7 @@
 
 	<div id="memes">
 	<% for(var i=0;i<memes.length;i++) { %>
-		<div>
-		 <%= memes[i].name %>
-		</div>
+		 <p> <%= memes[i].name %></p>
 		<a href="/memes/<%= memes[i].id %>" >
 			<img src=<%= memes[i].img %> />
 		</a>
