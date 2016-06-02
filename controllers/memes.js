@@ -14,6 +14,7 @@ var flickrOptions = {
 //INDEX
 router.get('/', function(req, res){
 	Memes.find({}, function(err, memes){
+    console.log(memes);
 		res.render('index.ejs', {memes});
 	});
 });
@@ -56,47 +57,79 @@ router.get('/new', function(req, res){
   res.render('new.ejs');
 });
 
-var flickrImage = [];
+// var flickrImage = [];
 //CREATE
 router.post('/', function(req,res){
-  var name = req.body.name
-  var img = req.body.imgURL;
+  var name = req.body.memeName
+  var img = req.body.img;
   var about = req.body.about;
-  var brandnewmeme = new Memes(req.body);
-  console.log('================')
-  console.log(brandnewmeme);
-  console.log('=================')
-  console.log(req.body.imgURL);
-  brandnewmeme.save(function(err){
-    if (err){
-      console.log(err);
-    }else{
-      console.log('new meme');
-       Flickr.tokenOnly(flickrOptions, function(error, flickr) {
-    // we can now use "flickr" as our API object
-    flickr.photos.search({
-      tags: img,
-      page: 1,
-      per_page: 1
-    }, function(err, result) {
-      console.log(result)
-      // console.log(typeof result)
-      console.log(result.photos);
-      var image = "https://farm" + result.photos.photo[0].farm + ".staticflickr.com/" + result.photos.photo[0].server + "/" + result.photos.photo[0].id + "_" + result.photos.photo[0].secret + ".jpg"
-      // result is Flickr's response
-      // newMemes.push({name: name, img: image, about: about})
-      // console.log(newMemes);
-      flickrImage.push(image);
-      console.log(flickrImage);
-    });
+
+  Flickr.tokenOnly(flickrOptions, function(error, flickr) {
+      // we can now use "flickr" as our API object
+      flickr.photos.search({
+        tags: img,
+        page: 1,
+        per_page: 1
+      }, function(err, result) {
+        // console.log(result);
+        var image = "https://farm" + result.photos.photo[0].farm + ".staticflickr.com/" + result.photos.photo[0].server + "/" + result.photos.photo[0].id + "_" + result.photos.photo[0].secret + ".jpg";
+        
+        var brandnewmeme = new Memes({
+          memeName: req.body.memeName,
+          img: image,
+          about: req.body.about
+        });
+
+        console.log(brandnewmeme);
+
+        brandnewmeme.save(function(err){
+          if (err){
+            console.log(err);
+          }else{
+            console.log(brandnewmeme.img + "HAS BEEN SAVED");
+          };
+        });
+          res.redirect('/memes');
+        // return image;// console.log(flickrImage);
+      });
   });
-    }
-  })
-  // res.redirect('/memes');
-  // res.render('index.ejs', {flickrImage: flickrImage[0]}, {newmeme});
-  res.redirect('/memes')
 });
 
+  // console.log("THIS IS THE FLICK IMAGE RESULT: " + flickrImage);
+
+  // var brandnewmeme = new Memes(req.body);
+  // console.log(req.body)
+  // console.log('================')
+  // console.log(brandnewmeme);
+  // console.log('=================')
+  // console.log(req.body.imgURL);
+  // brandnewmeme.save(function(err){
+  //   if (err){
+  //     console.log(err);
+  //   }else{
+  //     console.log('new meme');
+
+  //      Flickr.tokenOnly(flickrOptions, function(error, flickr) {
+  //   // we can now use "flickr" as our API object
+  //   flickr.photos.search({
+  //     tags: img,
+  //     page: 1,
+  //     per_page: 1
+  //   }, function(err, result) {
+  //     // console.log(result)
+  //     // console.log(typeof result)
+  //     // console.log(result.photos);
+  //     var image = "https://farm" + result.photos.photo[0].farm + ".staticflickr.com/" + result.photos.photo[0].server + "/" + result.photos.photo[0].id + "_" + result.photos.photo[0].secret + ".jpg"
+  //     // result is Flickr's response
+  //     // newMemes.push({name: name, img: image, about: about})
+  //     // console.log(newMemes);
+  //     flickrImage.push(image);
+  //     // console.log(flickrImage);
+  //   });
+  // });
+    // }
+  // res.redirect('/memes');
+  // res.render('index.ejs', {flickrImage: flickrImage[0]}, {newmeme});
 //FLICKRSHOW
 // router.get('/', function(req, res){
 //   Memes.find({}, function(err, memes){

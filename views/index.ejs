@@ -12,9 +12,9 @@
 
 	<div id="memes">
 	<% for(var i=0;i<memes.length;i++) { %>
-		 <p> <%= memes[i].name %></p>
-		<a href="/memes/<%= memes[i].id %>" >
-			<img src=<%= memes[i].img %> />
+		 <p> <%= memes[i].memeName %></p>
+		<a href="/memes/<%= memes[i].id %>">
+			<img src=<%= memes[i].img %>/>
 		</a>
 		</br>
 		<div>
@@ -24,6 +24,7 @@
 		<form action="/memes/<%= memes[i].id %>" method="POST">
 			<input type="hidden" name="_method" value="DELETE"></input>
 			<button>Delete</button>
+		</form>
 		<hr>
 	<% } %>
 	</div>
